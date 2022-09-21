@@ -1,88 +1,86 @@
-const router = require("express").Router();
-const User = require("../models/User");
-const Book = require("../models/Book");
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose=require('mongoose');
+const bookRouter = express.Router();
+const authenticate=require('../auth');
+const cors = require('./cors');
+const Books=require('../models/Book');
+bookRouter.use(bodyParser.json());
 
-//CREATE Book
-router.post("/", async (req, res) => {
-  const newBook = new Book(req.body);
-  try {
-    const savedBook = await newBook.save();
-    res.status(200).json(savedBook);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+bookRouter.route('/')
+.options(cors.corsCheck, (req, res) => { res.sendStatus(200); })
+.get(cors.corsCheck,(req,res,next) => {
+    Books.find(req.query)
+    .sort({name: 'asc'})
+    .then((books)=>{
+        res.statusCode=200;
+        res.setHeader('Content-Type','application/json');
+        res.json(books);
+    },(err)=>(next(err)))
+    .catch((err)=>(next(err)))
+})
+.post(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+    Books.create(req.body)
+    .then((book)=>{
+        res.statusCode=200;
+        res.setHeader('Content-Type','application/json');
+        res.json(book);
+    },(err)=>(next(err)))
+    .catch((err)=>(next(err))) 
+})
+.put(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+    res.statusCode = 403;
+    res.end('PUT operation not supported on /books');
+})
+.delete(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+    res.statusCode = 403;
+    res.end('DELETE operation not supported on /books');
+
+/*   Books.remove({})
+    .then((resp) => {
+       
+    }, (err) => next(err))
+    .catch((err) => next(err));*/
 });
 
-//UPDATE Book
-router.put("/:id", async (req, res) => {
-  try {
-    const Book = await Book.findById(req.params.id);
-    if (Book.username === req.body.username) {
-      try {
-        const updatedBook = await Book.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedBook);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can update only your Book!");
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
+bookRouter.route('/:bookId')
+.options(cors.corsCheck, (req, res) => { res.sendStatus(200); 
+    res.setHeader('Access-Control-Allow-Credentials', 'true')})
+.get(cors.corsCheck,(req,res,next) => {
+    Books.findById(req.params.bookId)
+    .then((book)=>{
+        res.statusCode=200;
+        res.setHeader('Content-Type','application/json');
+        res.json(book);
+    },(err)=>(next(err)))
+    .catch((err)=>(next(err)));
+})
+
+.post(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+    res.statusCode = 403;
+    res.end('POST operation not supported on /books/'+ req.params.bookId);
+})
+
+.put(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+ Books.findByIdAndUpdate(req.params.bookId,{
+     $set: req.body
+ },{new: true})
+ .then((book) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(book);
+}, (err) => next(err))
+.catch((err) => res.status(400).json({success: false}));
+})
+
+.delete(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+    Books.findByIdAndRemove(req.params.bookId)
+    .then((resp) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({_id: req.params.bookId,success: true});
+    }, (err) => next(err))
+    .catch((err) =>  res.status(400).json({success: false}));
 });
 
-//DELETE Book
-router.delete("/:id", async (req, res) => {
-  try {
-    const Book = await Book.findById(req.params.id);
-    if (Book.username === req.body.username) {
-      try {
-        await Book.delete();
-        res.status(200).json("Book has been deleted...");
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can delete only your Book!");
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//GET Book
-router.get("/:id", async (req, res) => {
-  try {
-    const Book = await Book.findById(req.params.id);
-    res.status(200).json(Book);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-//GET ALL BookS
-router.get("/", async (req, res) => {
-  const username = req.query.user;
-  //const catName = req.query.cat;
-  console.log('inside GetBooks Route');
-  try {
-    let Books;
-    if (username) {
-      Books = await Book.find({ username });
-    } else {
-      Books = await Book.find();
-    }
-    res.status(200).json(Books);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-module.exports = router;
+module.exports = bookRouter;
