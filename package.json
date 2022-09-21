@@ -1,0 +1,16 @@
+{
+  "name": "mongoose",
+  "version": "6.0.4",
+  "description": "ODM for mongodb",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Syed Murtaza",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1"
+  }
+}
