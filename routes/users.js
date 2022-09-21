@@ -62,10 +62,13 @@ function(req,res,next){
 
 
 router.post('/signup',cors.corsCheck, (req, res, next) => {
+  console.log('inside Register',req.body);
   User.register(new User({username: req.body.username,
-    email : req.body.email }), 
+    email : req.body.email,
+    password: req.body.password }), 
     req.body.password, (err, user) => {
       if(err) {
+        console.log('1st error',err)
         res.statusCode = 500;
         res.setHeader('Content-Type', 'application/json');
         res.json({err: err});
@@ -74,6 +77,7 @@ router.post('/signup',cors.corsCheck, (req, res, next) => {
                  
         user.save((err, user) => {
           if (err) {
+            console.log('Save block Error',err)
             res.statusCode = 500;
             res.setHeader('Content-Type', 'application/json');
             res.json({err: err});
