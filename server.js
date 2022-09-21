@@ -2,10 +2,10 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-const authRoute = require("./routes/auth");
+const authRoute = require("./routes/userauth");
 const userRoute = require("./routes/users");
 const bookRoute = require("./routes/books");
-const categoryRoute = require("./routes/categories");
+//const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const path = require("path");
 
@@ -14,13 +14,11 @@ app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify:true
+  .connect(process.env.MONGOURL, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
   })
-  .then(console.log("Connected to MongoDB"))
+  .then(console.log("Connection Established with MongoDB"))
   .catch((err) => console.log(err));
 
 const storage = multer.diskStorage({
@@ -37,11 +35,15 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
+app.get("/", (req, res) => {
+    res.status(200).json("BookMANIA API IS RUNNING");
+  });
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/books", bookRoute);
-app.use("/api/categories", categoryRoute);
+//app.use("/api/categories", categoryRoute);
 
-app.listen("5000", () => {
-  console.log("API is Running at 5000");
+app.listen("8000", () => {
+  console.log("API is Running at 8000");
 });
