@@ -1,9 +1,10 @@
 # Re-Books
 BOOK-MANIA APP BUILT WITH MERN STACK 
 
-Technology Used:
-MERN Stack
-MongoDB - Document database
+## Technology Used:
+
+### MERN Stack
+* MongoDB - Document database
 Express.js - Back-end web application framework
 React - Front-end web app Library
 Node.js - Server
@@ -12,7 +13,7 @@ Mongoose - ODM for MongoDB
 Authentication: Passport, Jsonwebtokens
 
 
-Basic Functionalites:
+## Basic Functionalites:
 User Authentication System(All Routes are protected)
 User can Signup /Login
 Edit profile 
@@ -23,9 +24,9 @@ Edit view books
 Delete books
 
 
-Running Project:
+## Running Project:
 
-SettingUp Server:
+### SettingUp Server:
 
 Make online Database using    https://www.mongodb.com/atlas/database Get your connection String Or you can also use your local MongoDB instance 
 After downloading the code make sure you are in your root directory and then run the following command  npm install . This will install all the required Dependency from package.json file .
