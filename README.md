@@ -2,7 +2,8 @@
 BOOK-MANIA APP BUILT WITH MERN STACK 
 
 ### DEMO VIDEO
-* https://streamable.com/6b85qn
+* https://streamable.com/3rrypm  Registration Part Video
+* https://streamable.com/6b85qn  Book CRUD Part Video
 
 ## Technology Used:
 
