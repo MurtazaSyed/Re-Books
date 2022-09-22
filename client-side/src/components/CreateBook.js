@@ -59,7 +59,7 @@ render(){
     </div>
     <div className="row row-content justify-content-center">
     <LocalForm onSubmit={(values) => {
-        this.props.postBook(values.name, values.author, values.description, values.isbn, values.cat, values.floor, values.shelf, values.copies);
+        this.props.postBook(values.name, values.author, values.price, values.pages);
     }}>
                     <Row className="form-group">
                                 <Label htmlFor="name" md={2}>Name </Label>
@@ -101,116 +101,47 @@ render(){
                                         }}
                                      />
                                 </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Label htmlFor="isbn" md={2}>ISBN No.</Label>
+
                                 <Col md={4}>
-                                    <Control.text model=".isbn" id="isbn" name="isbn"
-                                        placeholder="ISBN no. of book"
+                                    <Control.text model=".price" id="author" name="price"
+                                        placeholder="Price"
                                         className="form-control"
                                         validators={{
-                                            required, minLength: minLength(10), maxLength: maxLength(13), isNumber,
-                                            uniqueIsbn
+                                            required, minLength: minLength(1)
                                         }}
                                          />
                                     <Errors
                                         className="text-danger"
-                                        model=".isbn"
+                                        model=".price"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
-                                            minLength: ' Must be greater than 9 numbers',
-                                            maxLength: ' Must be 13 numbers or less',
-                                            isNumber: ' Must be a number',
-                                            uniqueIsbn: ' There exists a book with this ISBN No.'
+                                            minLength: ' Must be greater than 1 characters'
                                         }}
                                      />
                                 </Col>
-                                <Label htmlFor="copies" md={3}> Copies Available</Label>
-                                <Col md={3}>
-                                    <Control.text model=".copies" id="copies" name="copies"
-                                        placeholder="Number of copies available"
+
+                                <Col md={4}>
+                                    <Control.text model=".pages" id="author" name="pages"
+                                        placeholder="Total Pages"
                                         className="form-control"
                                         validators={{
-                                            requiredNum, minVal: minVal(1), maxVal: maxVal(1000), isNumber
+                                            required, minLength: minLength(1)
                                         }}
                                          />
                                     <Errors
                                         className="text-danger"
-                                        model=".copies"
+                                        model=".pages"
                                         show="touched"
                                         messages={{
-                                            requiredNum: 'Required',
-                                            minVal: ' Must be greater than 0',
-                                            maxVal: ' Must be 1000 or less',
-                                            isNumber: ' Must be a number'
+                                            required: 'Required',
+                                            minLength: ' Must be greater than 1 characters'
                                         }}
                                      />
                                 </Col>
                             </Row>
 
-      
-                        <Row className="form-group">
-                            <Col>
-                            <Label htmlFor="cat">Category</Label>
-                            <Control.select defaultValue="Romance" model=".cat" id="cat" className="form-control">
-                              <option>Romance</option> <option>Technology</option>
-                              <option>Computer Science</option> <option>Management</option>
-                              <option>Electronics</option> <option>Physics</option>
-                              <option>Chemistry</option> <option>Mathematics</option>
-                              <option>Fiction</option> <option>Philosophy</option>
-                              <option>Language</option> <option>Arts</option>
-                              <option>Other</option> 
 
-                            </Control.select>
-                            </Col>
-                            <Col>
-                            <Label htmlFor="floor">Floor </Label>
-                            <Control.select defaultValue={0} model=".floor" id="floor" 
-                            className="form-control" >
-                              <option>0</option> <option>1</option>
-                              <option>2</option> <option>3</option>
-                              <option>4</option> <option>5</option>
-                              <option>6</option> <option>7</option>
-                              <option>8</option> 
-                            </Control.select>
-                            </Col>
-                        </Row>
-                        
-                        <Row className="form-group text-center justify-content-center">
-                                <Label htmlFor="shelf" md={3}> Shelf</Label>
-                                <Col md={6}>
-                                    <Control.text model=".shelf" id="shelf" name="shelf"
-                                        placeholder="Shelf no. for locating book"
-                                        className="form-control"
-                                        validators={{
-                                            requiredNum, minVal: minVal(1), maxVal: maxVal(100), isNumber
-                                        }}
-                                         />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".shelf"
-                                        show="touched"
-                                        messages={{
-                                            requiredNum: 'Required',
-                                            minVal: ' Must be greater than 0',
-                                            maxVal: ' Must be 100 or less',
-                                            isNumber: ' Must be a number'
-                                        }}
-                                     />
-                                </Col>
-                            </Row>
-
-                     
-                        <Row className="form-group">
-                                <Label htmlFor="description" md={2}>Description</Label>
-                                <Col md={10}>
-                                    <Control.textarea model=".description" id="description" name="description"
-                                        rows="12"
-                                        placeholder="Some description of the book"
-                                        className="form-control" />
-                                </Col>
-                            </Row>
                           <Row className="align-self-center">
                           <Col className="text-center">
                         <Button type="submit" className="bg-primary">

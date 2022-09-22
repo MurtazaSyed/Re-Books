@@ -53,9 +53,7 @@ render(){
         <CardHeader><h3>My Profile</h3></CardHeader>
         <CardBody>
           <CardText>
-          <h5> First Name : {'          '+this.props.auth.userinfo.firstname}</h5>
-          <h5> Last Name : {'          '+this.props.auth.userinfo.lastname}</h5>
-          <h5> {(this.props.auth.userinfo.admin)?'Admin Id : ':'Roll No.'} : {'          '+this.props.auth.userinfo.roll}</h5>
+          <h5> Username : {'          '+this.props.auth.userinfo.username}</h5>
           <h5> Email : {'          '+this.props.auth.userinfo.email}</h5>
           </CardText>
           

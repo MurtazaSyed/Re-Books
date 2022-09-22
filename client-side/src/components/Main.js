@@ -34,8 +34,8 @@ const mapStateToProps= (state)=>{
 const mapDispatchToProps = dispatch => ({
   fetchBooks: () => { dispatch(fetchBooks())},
   fetchUsers: () => { dispatch(fetchUsers())},
-  postBook: (name, author, description, isbn, cat, floor, shelf, copies) => dispatch(postBook(name, author, description, isbn, cat, floor, shelf, copies)),
-  editBook: (_id, name, author, description, isbn, cat, floor, shelf, copies) => dispatch(editBook(_id, name, author, description, isbn, cat, floor, shelf, copies)),
+  postBook: (name, author, price, pages) => dispatch(postBook(name, author, price, pages)),
+  editBook: (_id, name, author, price, pages) => dispatch(editBook(_id, name, author, price, pages)),
   deleteBook: (_id) =>  dispatch(deleteBook(_id)),
   loginUser: (creds) => dispatch(loginUser(creds)),
   logoutUser: () => dispatch(logoutUser()),
@@ -69,7 +69,7 @@ class Main extends Component {
       handleSubmitEdit(values) {
         this.toggleEditModal();
         this.props.editBook(this.state.selectedBook._id, values.name, values.author,
-          values.description, values.isbn, values.cat, values.floor, values.shelf, values.copies);     
+         values.price, values.pages);     
         }
     
     changeSelected(_id){
@@ -272,7 +272,7 @@ class Main extends Component {
                             <Row className="form-group">
                                 <Label htmlFor="isbn" md={4}>Pages</Label>
                                 <Col md={8}>
-                                    <Control.text model=".isbn" id="isbn" name="isbn"
+                                    <Control.text model=".pages" id="isbn" name="pages"
                                         defaultValue={this.state.selectedBook.pages}
                                         className="form-control"
                                         validators={{
@@ -282,7 +282,7 @@ class Main extends Component {
                                          />
                                     <Errors
                                         className="text-danger"
-                                        model=".isbn"
+                                        model=".pages"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
@@ -296,7 +296,7 @@ class Main extends Component {
                         <Row className="form-group">
                                 <Label htmlFor="copies" md={6}> Prices</Label>
                                 <Col md={6}>
-                                    <Control.text model=".copies" id="copies" name="copies"
+                                    <Control.text model=".price" id="copies" name="price"
                                         defaultValue={this.state.selectedBook.price}
                                         className="form-control"
                                         validators={{
@@ -305,7 +305,7 @@ class Main extends Component {
                                          />
                                     <Errors
                                         className="text-danger"
-                                        model=".copies"
+                                        model=".price"
                                         messages={{
                                             requiredNum: 'Required',
                                             minVal: 'Must be greater than 0',

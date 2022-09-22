@@ -20,6 +20,7 @@ bookRouter.route('/')
     .catch((err)=>(next(err)))
 })
 .post(cors.corsCheck,authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
+   console.log('inside Add book Route',req.body)
     Books.create(req.body)
     .then((book)=>{
         res.statusCode=200;

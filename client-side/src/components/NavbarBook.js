@@ -134,38 +134,7 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
                             ):
                             (<div/>)
                         }
-                        {
-                            (this.props.auth.isAuthenticated&&!this.props.auth.userinfo.admin)?(
-                                <NavItem onClick={this.toggleNav} className="ml-2">
-                               <NavLink className="nav-link text-primary" to="/history">
-                                     <span className="fa fa-history"/> Issue history
-                                </NavLink>
-                                </NavItem>
-                            ):
-                            (<div/>)
-                        }
-                         {
-                            (this.props.auth.isAuthenticated&&this.props.auth.userinfo.admin)?(
-                              <React.Fragment>
-                                <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/issue">
-                                     <span className="fa fa-plus-square"/> Issue Book
-                                </NavLink>
-                                </NavItem>
-                                <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/return">
-                                   <span className="fa fa-list-ul"/> Return Book
-                                </NavLink>
-                                </NavItem>
-                                <NavItem onClick={this.toggleNav} className="ml-2">
-                                <NavLink className="nav-link text-primary" to="/stats">
-                                   <span className="fa fa-info-circle"/> Stats
-                                </NavLink>
-                                </NavItem>
-                              </React.Fragment>
-                            ):
-                            (<div/>)
-                        }
+                         
                      </Nav>
                      <Nav className="ml-auto" navbar>
                      <NavItem>

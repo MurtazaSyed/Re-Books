@@ -4,12 +4,11 @@ const BookSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
-      unique: true,
+      required: true
     },
     desc: {
       type: String,
-      required: true,
+      required: false,
     },
     imageUrl: {
       type: String,
@@ -17,7 +16,7 @@ const BookSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-      required: true,
+      required: false
     },
     author: {
         type: String,
